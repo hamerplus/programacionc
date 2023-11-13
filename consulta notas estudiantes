@@ -1,0 +1,37 @@
+  #include <stdio.h>
+
+
+struct Estudiante {
+	char nombre[50];
+	int notas[5];
+};
+
+
+void consultarNotas(struct Estudiante est){
+	printf("notas de %s:\n", est.nombre);
+	for(int i=0; i<5;i++){
+		printf("materia %d: %d\n",i+1, est.notas[i]);
+	}
+}
+
+
+float calcularPromedio(struct Estudiante est){
+	int suma=0;
+	for (int i=0; i<5;i++){
+		suma+= est.notas[i];
+	}
+	return(float)suma/5;
+}
+int main() {
+	struct Estudiante estudiantes[3]= {
+		{"estudiante1",{85,90,75,88,92}},
+		{"estudiante2",{78,70,85,80,88}},
+		{"estudiante3",{92,85,90,87,76}}
+	
+	};
+	
+	consultarNotas(estudiantes[0]);
+	float promedio=calcularPromedio(estudiantes[0]);
+	printf("promedio de %s:%.2f\n",estudiantes[0].nombre,promedio);
+	return 0;
+}
