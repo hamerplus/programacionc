@@ -1,0 +1,137 @@
+import java.util.List;
+import java.util.Scanner;
+
+public class main {
+    public static void main(String[] args) { 
+        rutastransmilenio rutastransmilenio=new rutastransmilenio();
+        Scanner scanner=new Scanner(System.in);
+        
+        int choice;
+        do {
+            System.out.println("selecione una opcion:");
+            System.out.println("1. Ponga la ruta de transmilenio para mostrar las paradas");
+            System.out.println("2. Conocer rutas que funcionas en feriados");
+            System.out.println("3. Salir");
+            choice=scanner.nextInt();
+            
+            switch (choice) {
+                case 1:
+                    System.out.print("Ingrese el numero del transmilenio;");
+                    scanner.nextLine();
+                    String route=scanner.nextLine();
+                    List<String> stops=rutastransmilenio.getStopsByRouteNumber(route);
+                    if (stops != null) {
+                        System.out.println("Las paradas para la ruta"+route+"son:");
+                        for (String stop : stops) {
+                            System.out.println(stop);
+                        }
+                    } else {
+                        System.out.println("Ruta no encontrada.");
+                    }
+                    break;
+                case 2: 
+                    List<String> holidayRoutes=rutastransmilenio.getHolidayRoutes();
+                    if(!holidayRoutes.isEmpty()) {
+                        System.out.println("Las rutas que funcionas en feriados son:");
+                        for (String holidayRoute:holidayRoutes) {
+                            System.out.println(holidayRoute);
+                        }
+                    }else {
+                        System.out.println("No hay rutas disponibles para dias feriados");
+                    }
+                    break;
+                case 0:
+                    System.out.println("Salidad del programa. ¡BYE!");
+                    break;
+                default:
+                    System.out.println("opcion no valida. intente de nuevo.");
+                    break;
+            }
+        }while (choice !=0);
+        scanner.close();
+    }
+}
+
+
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class transmilenio {
+    private String routeNumber;
+    private List<String> stops;
+    
+    public transmilenio(String routeNumber) {
+        this.routeNumber=routeNumber;
+        this.stops=new ArrayList<>();
+    }
+    public String getRouteNumber() {
+        return routeNumber;
+    }
+    public List<String> getStops() {
+        return stops;
+    }
+    public void addStop(String stop) {
+        stops.add(stop);
+    }
+}
+
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class rutastransmilenio {
+    public List<transmilenio> buses;
+    private List<String> holidayRoutes;
+    
+    public rutastransmilenio() {
+        buses=new ArrayList<>();
+        holidayRoutes=new ArrayList<>();
+        
+        transmilenio bus1=new transmilenio("B27");
+        bus1.addStop("calle40 sur");
+        bus1.addStop("Avenida Jimenez");
+        bus1.addStop("Calle 36");
+        bus1.addStop("Calle 76");
+        bus1.addStop("Calle 85");
+        bus1.addStop("Virrey");
+        bus1.addStop("Calle 100");
+        bus1.addStop("Toberín");
+        bus1.addStop("Portal Norte");
+        buses.add(bus1);
+        
+        transmilenio bus2=new transmilenio("H72");
+        bus2.addStop("Toberín");
+        bus2.addStop("Mazurén");
+        bus2.addStop("Álcala");
+        bus2.addStop("Pepe Sierra");
+        bus2.addStop("Castellana");
+        bus2.addStop("Avenida Chile");
+        bus2.addStop("Mosvitar Arena");
+        bus2.addStop("Paloquemao");
+        bus2.addStop("Tygua San Jose");
+        bus2.addStop("Hospital");
+        bus2.addStop("Nariño");
+        bus2.addStop("Fucha");
+        bus2.addStop("Olaya");
+        bus2.addStop("Socorro");
+        bus2.addStop("Consuelo");
+        buses.add(bus2);
+        
+        holidayRoutes.add("H72");
+        }
+    public List<String> 
+    getStopsByRouteNumber(String routeNumber) {
+        for (transmilenio bus:buses)  {
+            if (bus.getRouteNumber().equals(routeNumber)) {
+                return bus.getStops();
+            }
+        }
+        return null;
+    }
+    public List<String> getHolidayRoutes() {
+        return holidayRoutes;
+    }
+}
